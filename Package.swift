@@ -38,6 +38,7 @@ targets.insert(
 
 let package = Package(
     name: "imessage-relay",
+    platforms: [.macOS(.v14)],
     products: [
         .library(
             name: "IMessageRelayCore",
