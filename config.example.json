@@ -1,0 +1,7 @@
+{
+  "webhook_url": "https://example.com/hooks/messages",
+  "auth_header": "Bearer replace-me",
+  "poll_seconds": 3,
+  "skip_one_time_codes": true,
+  "detail_level": "ping"
+}
