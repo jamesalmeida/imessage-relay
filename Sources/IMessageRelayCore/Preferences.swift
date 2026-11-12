@@ -31,7 +31,7 @@ public struct RelayPreferences: Equatable {
         detailLevel: .ping,
         skipOneTimeCodes: true,
         pollSeconds: 3,
-        showInDock: false,
+        showInDock: true,
         launchAtLogin: true,
         reenableBehavior: .skipMissed
     )

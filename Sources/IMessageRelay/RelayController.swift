@@ -99,8 +99,7 @@ final class RelayController: ObservableObject {
     }
 
     func stop() {
-        enabled = false
-        persist()
+        // Do not touch the saved enabled flag: quitting must not turn the relay off for the next launch.
         stopFlag.set()
         wake.signal()
         appendRelayLog("stopping")
@@ -179,8 +178,13 @@ final class RelayController: ObservableObject {
     }
 
     func openSettings() {
-        NSApp.activate()
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        DispatchQueue.main.async { SettingsWindowController.shared.show() }
+    }
+
+    var webhookConfigured: Bool {
+        guard let raw = KeychainStore.load(account: KeychainStore.webhookAccount)?
+            .trimmingCharacters(in: .whitespacesAndNewlines) else { return false }
+        return !raw.isEmpty
     }
 
     /// Wake the poll loop so a newly saved webhook is picked up without waiting out the interval.

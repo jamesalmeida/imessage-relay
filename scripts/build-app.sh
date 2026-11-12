@@ -14,6 +14,7 @@ mkdir -p "${APP}/Contents/MacOS" "${APP}/Contents/Resources"
 cp -f "${ROOT}/.build/release/imessage-relay" "${APP}/Contents/MacOS/imessage-relay"
 chmod 755 "${APP}/Contents/MacOS/imessage-relay"
 cp -f "${ROOT}/App/Info.plist" "${APP}/Contents/Info.plist"
+cp -f "${ROOT}/App/AppIcon.icns" "${APP}/Contents/Resources/AppIcon.icns"
 
 if command -v codesign >/dev/null 2>&1; then
   codesign --force --sign - --identifier "${IDENTIFIER}" "${APP}/Contents/MacOS/imessage-relay"

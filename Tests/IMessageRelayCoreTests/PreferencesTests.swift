@@ -8,7 +8,7 @@ final class PreferencesTests: XCTestCase {
         XCTAssertEqual(defaults.detailLevel, .ping)
         XCTAssertTrue(defaults.skipOneTimeCodes)
         XCTAssertEqual(defaults.pollSeconds, 3)
-        XCTAssertFalse(defaults.showInDock)
+        XCTAssertTrue(defaults.showInDock)
         XCTAssertTrue(defaults.launchAtLogin)
         XCTAssertEqual(defaults.reenableBehavior, .skipMissed)
     }
