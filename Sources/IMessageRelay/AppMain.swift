@@ -5,34 +5,33 @@ import IMessageRelayCore
 import SwiftUI
 
 @main
-struct IMessageRelayApp: App {
-    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-
-    init() {
+enum IMessageRelayMain {
+    // Plain AppKit entry point: the menu bar item and Settings window are managed by the
+    // AppDelegate, so no SwiftUI App scene (which would add a stray empty window) is needed.
+    static func main() {
         if shouldRunCLI(CommandLine.arguments) {
-            let code = runCLI(CommandLine.arguments)
-            exit(code)
+            exit(runCLI(CommandLine.arguments))
         }
         UserDefaults.standard.register(defaults: RelayPreferences.registration)
-    }
-
-    var body: some Scene {
-        MenuBarExtra {
-            MenuContent()
-        } label: {
-            MenuLabel()
-        }
-        .menuBarExtraStyle(.menu)
-
-        Settings {
-            SettingsView()
+        let app = NSApplication.shared
+        let delegate = AppDelegate()
+        app.delegate = delegate
+        app.setActivationPolicy(.accessory)
+        withExtendedLifetime(delegate) {
+            app.run()
         }
     }
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
+    private let statusBar = StatusBarController()
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         RelayController.shared.bootstrap()
+        statusBar.install()
+        if !RelayController.shared.webhookConfigured {
+            RelayController.shared.openSettings()
+        }
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {

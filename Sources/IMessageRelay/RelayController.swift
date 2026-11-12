@@ -178,8 +178,13 @@ final class RelayController: ObservableObject {
     }
 
     func openSettings() {
-        NSApp.activate()
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        DispatchQueue.main.async { SettingsWindowController.shared.show() }
+    }
+
+    var webhookConfigured: Bool {
+        guard let raw = KeychainStore.load(account: KeychainStore.webhookAccount)?
+            .trimmingCharacters(in: .whitespacesAndNewlines) else { return false }
+        return !raw.isEmpty
     }
 
     /// Wake the poll loop so a newly saved webhook is picked up without waiting out the interval.
