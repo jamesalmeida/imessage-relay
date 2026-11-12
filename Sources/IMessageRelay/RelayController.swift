@@ -99,8 +99,7 @@ final class RelayController: ObservableObject {
     }
 
     func stop() {
-        enabled = false
-        persist()
+        // Do not touch the saved enabled flag: quitting must not turn the relay off for the next launch.
         stopFlag.set()
         wake.signal()
         appendRelayLog("stopping")

@@ -8,7 +8,6 @@ struct MenuLabel: View {
 
     var body: some View {
         Image(systemName: controller.statusKind.symbolName)
-            .opacity(controller.statusKind == .running ? 1 : 0.45)
     }
 }
 

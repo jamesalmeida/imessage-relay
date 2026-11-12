@@ -35,6 +35,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         RelayController.shared.bootstrap()
     }
 
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        RelayController.shared.openSettings()
+        return true
+    }
+
     func applicationWillTerminate(_ notification: Notification) {
         RelayController.shared.stop()
     }
